@@ -1,10 +1,10 @@
 import React from "react";
-// import "./styles.css";
+import "./styles.css"
 import Paddle from "./components/Paddle";
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="container">
       <Paddle />
       <Paddle isPlayerTwo />
     </div>
