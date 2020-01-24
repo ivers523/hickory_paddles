@@ -4,9 +4,11 @@
     background-color: rebeccapurple;
     border-radius: 4px;
     /* Positioning */
+
     position: absolute;
-    right: 10px;
-    transform: translateY(45%);
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
 
   }
   
@@ -14,9 +16,12 @@
  
   background-color: salmon;
   /* Positioning */
+
   position: absolute;
-  left: 10px;
-  /* position along the Y axis of a coordinate plane, ensure that the container position is set to relative to keep paddles within the bounds */
-  transform: translateY(30%);
+  left: auto;
+  right: 10px;
+  top: 50%;
+  /* position along the Y axis of a coordinate plane, ensure that the container position is set to relative to keep paddles within the bounds ???? */
+  transform: translateY(-50%);
   
 }
