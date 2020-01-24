@@ -18,6 +18,12 @@ const initialState = {
   },
   paddle2: {
     y: 0,
+  },
+  ball: {
+    x: 0,
+    y: 0,
+    dx: 5,
+    dy: 5
   }
 };
 // using reducer hook due to the fact that state has become more complicated than 1 value
@@ -27,6 +33,8 @@ function reducer(state, action) {
       return { ...state, paddle1: action.payload };
     case "MOVE_PADDLE_P2":
       return { ...state, paddle2: action.payload };
+    case "MOVE_BALL":
+      return { ...state, ball: action.payload };
     default:
       throw new Error();
   }
@@ -54,19 +62,44 @@ export default function App() {
       });
     }
   }
-
   useEffect(() => {
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+  });
 
-  }, [state]);
-
+  useEffect(() => {
+    const handle = setTimeout(() => {
+      let dx = state.ball.dx;
+      let dy = state.ball.dy;
+      if (
+        state.ball.x + state.ball.dx > 400 - 20 ||
+        state.ball.x + state.ball.dx < 0
+      ) {
+        dx = -dx;
+      }
+      if (
+        state.ball.y + state.ball.dy > 300 - 20 ||
+        state.ball.y + state.ball.dy < 0
+      ) {
+        dy = -dy;
+      }
+      dispatch({
+        type: "MOVE_BALL",
+        payload: {
+          dx,
+          dy,
+          x: state.ball.x + dx,
+          y: state.ball.y + dy
+        }
+      });
+    }, 50);
+    return () => clearTimeout(handle);
+  }, [state.ball]);
 
   return (
     <div className="container">
       <Paddle paddleY={state.paddle1.y} />
       <Paddle isPlayerTwo paddleY={state.paddle2.y} />
-      <Ball />
+      <Ball pos={state.ball} />
     </div>
   );
 }

@@ -3,6 +3,7 @@
     height: 100px;
     background-color: #990000;
     border-radius: 4px;
+    box-shadow: 5px 5px 5px grey;
     /* Positioning */
 
     position: absolute;
@@ -15,6 +16,7 @@
 .paddle.player2 {
  
   background-color: #C0C0C0;
+  box-shadow: 5px 5px 5px grey;
   /* Positioning */
 
   position: absolute;
