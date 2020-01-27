@@ -9,7 +9,7 @@ export default function Brick({ style }) {
         position: "absolute",
         width: "100px",
         height: "25px",
-        background: "salmon",
+        background: "white",
         borderRadius: "4px",
         border: "1px solid #333",
         ...style

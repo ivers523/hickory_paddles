@@ -108,16 +108,26 @@ export default function App() {
     return () => clearTimeout(handle);
   }, [state.ball]);
 
-const bricks = [
-  {
-    top: 0,
-    left: 0
-  },
-  {
-    top: 50,
-    left: 200
-  },
-]
+  const bricks = [
+    {
+      top: 10,
+      left: 190,
+      width: 20,
+      height: 20
+    },
+    {
+      top: 98,
+      left: 190,
+      width: 20,
+      height: 100
+    },
+    {
+      top: 260,
+      left: 190,
+      width: 20,
+      height: 20
+    }
+  ];
 
 
   return (
