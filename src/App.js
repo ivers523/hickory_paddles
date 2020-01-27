@@ -2,12 +2,13 @@ import React, { useEffect, useReducer } from "react";
 import "./styles.css"
 import Paddle from "./components/Paddle";
 import Ball from "./components/Ball";
+import Brick from "./components/Brick";
 
 // not the "actual" Y value, rather, these refer to the change in position along the Y axis
 // const [p1PaddleY, setP1PaddleY] = useState(0);
 // const [p2PaddleY, setP2PaddleY] = useState(0);
 
-// why would adding value to the Y axis cause the paddle to move down?
+// ?why would adding value to the Y axis cause the paddle to move down?
 
 
 // Set initial state to 0
@@ -43,7 +44,7 @@ function reducer(state, action) {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  function handleKey(e) {
+  function handleKeyDown(e) {
     const char = e.key.toLowerCase();
     if (char === "w" || char === "s") {
       dispatch({
@@ -63,25 +64,37 @@ export default function App() {
     }
   }
   useEffect(() => {
-    window.addEventListener("keydown", handleKey);
+    window.addEventListener("keydown", handleKeyDown);
   });
+
+  // add event listener for key up?
+  // or clear timeout? 
 
   useEffect(() => {
     const handle = setTimeout(() => {
+      let x = state.ball.x;
+      let y = state.ball.y;
       let dx = state.ball.dx;
       let dy = state.ball.dy;
-      if (
-        state.ball.x + state.ball.dx > 400 - 20 ||
-        state.ball.x + state.ball.dx < 0
-      ) {
+
+      let p1y = 150 + state.paddle1.y;
+      let p2y = state.paddle2.y;
+
+      if (x + dx > 400 - 20 || x + dx < 0) {
         dx = -dx;
       }
-      if (
-        state.ball.y + state.ball.dy > 300 - 20 ||
-        state.ball.y + state.ball.dy < 0
-      ) {
+      if (y + dy > 300 - 20 || y + dy < 0) {
         dy = -dy;
       }
+
+      if ((p1y < y + dy && p1y + 100 > y + dy) && x < 45) {
+        dx = -dx;
+      }
+      if ((p2y < y + dy && p2y + 100 > y + dy) && x > 685) {
+        dx = -dx;
+      }
+
+
       dispatch({
         type: "MOVE_BALL",
         payload: {
@@ -95,8 +108,23 @@ export default function App() {
     return () => clearTimeout(handle);
   }, [state.ball]);
 
+const bricks = [
+  {
+    top: 0,
+    left: 0
+  },
+  {
+    top: 50,
+    left: 200
+  },
+]
+
+
   return (
     <div className="container">
+      {bricks.map((brick) => 
+      <Brick style = {brick} />)}
+      
       <Paddle paddleY={state.paddle1.y} />
       <Paddle isPlayerTwo paddleY={state.paddle2.y} />
       <Ball pos={state.ball} />
